@@ -12,7 +12,7 @@ AvionModel.getOne = (NumeroAvion, cb) =>
 
 AvionModel.Post = (data, cb) =>
 
-            conn.query ( "Call public.sp_avion_insert ($1, $2, $3, $4)",
+            conn.query ( "Call public.sp_avion_insert ($1, $2, $3, $4, $5,$6,$7)",
             [
             data.NumeroAvion,
             data.TipoAvion,
@@ -38,7 +38,7 @@ AvionModel.Put = (data, cb) =>
             ],
             cb);  
 
-            AvionModel.delete = (data, cb) =>
+            AvionModel.delete = (id, cb) =>
             conn.query("call public.sp_avion_delete ($1)", [id.NumeroAvion],
             cb);
        

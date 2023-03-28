@@ -1,12 +1,11 @@
 "Use strict"
 
-const AvionModel = require('../models/avion-model')
 
-var AvionController = require('../models/avion-model'),
+var AvionModel = require('../models/avion-model'),
     AvionController = () => {}
 
+
     AvionController.getAll = (req, res, next) => {
-    
     AvionModel.getAll((err, rows) => {
         if(err)
         {
@@ -32,14 +31,14 @@ var AvionController = require('../models/avion-model'),
 
      AvionController.getOne = (req, res, next) => {
     let numeroavion = re.body.numeroavion
-    console.log(no_cuenta)
+    console.log(nomeroavion)
 
     AvionModel.getOne(numeroavion, (err, rows)=> {
         console.log(err, '---', rows)
         if(err)
         {
             let locals = {
-                title : 'Error al buscar el registro del avison con el ID',//, {numeroavion},
+                title : `Error al buscar el registro con el id: ${numeroavion}`,
                 description : "Error de sintaxis SQL",
                 error : err
             }
@@ -52,6 +51,7 @@ var AvionController = require('../models/avion-model'),
                 title : 'Editar Avion',
                 data : rows
             }
+            res.status(200).send(rows.rows)
         }
 
     })
@@ -59,7 +59,7 @@ var AvionController = require('../models/avion-model'),
 }
 
 AvionController.post = (req, res, next) => {
-    let alumno = {
+    let avion = {
         numeroavion : req.body.numeroavion,
         TipoAvion : req.body.TipoAvion,
         HorasVuelo : req.body.HorasVuelo,
@@ -75,7 +75,7 @@ AvionController.post = (req, res, next) => {
         if(err)
         {
             let locals = {
-                title : 'Error al buscar el registro del avison con el ID',//, {numeroavion}, 
+                title : `Error al buscar el registro con el id: ${numeroavion}`,
                 description : "Error de sintaxis SQL",
                 error : err,
             }
@@ -87,6 +87,38 @@ AvionController.post = (req, res, next) => {
         }     
     })
 }
+
+AvionController.put = (req, res, next) => {
+    let avion = {
+        numeroavion : req.body.numeroavion,
+        TipoAvion : req.body.TipoAvion,
+        HorasVuelo : req.body.HorasVuelo,
+        CapacidadPasajeo : req.body.CapacidadPasajeo,
+        FechaPrimerVuelo : req.body.FechaPrimerVuelo,
+        PaisConstruccion : req,body,PaisConstruccion,
+        CantidadVuelos : req,body,CantidadVuelos, 
+    }
+
+    console.log(avion)
+
+    AvionModel.put(avion, (err) =>{
+        if(err)
+        {
+            let locals = {
+                title : `Error al buscar el registro con el id: ${avion.numeroavion}`,
+                description : "Error de sintaxis SQL",
+                error : err,
+            }
+
+            res.status(520).json(err)
+        }
+        else{
+            res.send('Avion actualizado de forma correcta')
+        }     
+    })
+}
+
+
 
 
     AvionController.addForm = (req, res, next) =>
